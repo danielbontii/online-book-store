@@ -1,6 +1,5 @@
 <?php
 
-// Connect to the database and return the database object
 function connect()
 {
     // Set the hostname
@@ -22,4 +21,14 @@ function connect()
         echo $e->getMessage();
     }
 
+}
+
+function getGooks() {
+    try {
+        $db = connect();
+        $booksQuery = $db->query("SELECT * FROM books");
+        return $booksQuery->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        echo($e->getMessage());
+    }
 }
