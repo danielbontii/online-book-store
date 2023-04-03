@@ -27,7 +27,7 @@
         <?php if (isset($books) && count($books) > 0): ?>
             <?php foreach ($books as $book): ?>
                 <div class="card m-2" style="width: 18rem;">
-                    <a href="add-edit-book.php?id=<?= $book['id'] ?>">Edit</a>
+                    <a href="book-form.php?id=<?= $book['id'] ?>">Edit</a>
                     <img src=<?php echo $book['cover']; ?> class="card-img-top" alt="cover" class="fluid">
                     <div class="card-body">
                         <h5 class="card-title"> <?php echo $book['title']; ?></h5>

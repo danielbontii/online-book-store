@@ -6,6 +6,25 @@
           rel='stylesheet'
           integrity='sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor'
           crossorigin='anonymous'>
+
+    <style>
+        .custom-file-upload {
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #fff;
+            background-color: #C0C0C0;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .custom-file-upload:hover {
+            background-color: #11707D;
+        }
+            /*input[type="file"] {*/
+            /*    display: none;*/
+            /*}*/
+    </style>
 </head>
 
 <body>

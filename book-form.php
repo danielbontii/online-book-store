@@ -23,11 +23,11 @@ if (isset($_GET['id'])) {
 <?php require_once '_header.php' ?>
 
     <div class='row'>
-        <h1 class='col-md-12 text-center border border-dark bg-primary text-white'>Add New Book</h1>
+        <h1 class='col-md-12 text-center border border-dark bg-secondary text-white'>Add New Book</h1>
     </div>
     <div class='row container mx-auto'>
         <form method='post' action='add-edit-book.php' enctype="multipart/form-data">
-            <input type='hidden' name='id' value='<?= $member['id'] ?? '' ?>'>
+            <input type='hidden' name='id' value='<?= $book['id'] ?? '' ?>'>
             <div class="row">
                 <div class='form-group my-3 col-6'>
                     <label for='title'>Title</label>
@@ -47,7 +47,7 @@ if (isset($_GET['id'])) {
                     <label for='price'>Price</label>
                     <input type='number' name='price' class='form-control' id='price'
                            placeholder='Enter price' required autofocus
-                           value='<?= isset($book['title']) ? htmlentities($book['title']) : '' ?>'>
+                           value='<?= isset($book['price']) ? htmlentities($book['price']) : '' ?>'>
                 </div>
                 <div class='form-group my-3 col-8'>
                     <label for='description'>Description</label>
@@ -63,8 +63,7 @@ if (isset($_GET['id'])) {
                     <label for='cover'>Cover Photo</label>
                     <input type='file' name='cover' class='form-control' id='cover'
                            required autofocus
-                           accept=".jpeg"
-                           value='<?= isset($book['title']) ? htmlentities($book['title']) : '' ?>'>
+                           accept=".jpeg, .png">
                 </div>
                 <div class='form-group my-3 col-8'>
                     <label for='keywords'>Keywords</label>

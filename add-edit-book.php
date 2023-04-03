@@ -4,18 +4,12 @@ require_once 'functions.php';
 
 if (!empty($_POST)) {
 
-//    print_r($_FILES); die();
     $title = $_POST['title'] ?? '';
     $author = $_POST['author'] ?? '';
     $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_INT);
     $keywords = $_POST['keywords'] ?? '';
     $description = $_POST['description'] ?? '';
     $cover = uploadImage();
-
-//    print_r();
-//    die();
-
-    uploadImage();
 
     $db = connect();
 
@@ -30,9 +24,6 @@ if (!empty($_POST)) {
                 "keywords" => $keywords,
                 "cover" => $cover
             ]);
-//            print_r($newBookStmt);
-//            var_dump($db->lastInsertId());
-//            die();
             if ($newBookStmt->rowCount()) {
                 $type = 'success';
                 $message = 'Book added successfully';
@@ -42,19 +33,23 @@ if (!empty($_POST)) {
             }
         } catch (Exception $e) {
             $type = 'error';
-            $message = 'Member not added: ' . $e->getMessage();
+            $message = 'Book not added: ' . $e->getMessage();
         }
     } else {
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
         try {
-            $updateBookStmt = $db->prepare("UPDATE books SET title=:title, author=:author, price=:price, description=:description, keywords=:keywords WHERE id=:id");
+            $updateBookStmt = $db->prepare(
+                "UPDATE books SET title=:title, author=:author, price=:price, description=:description,
+                 keywords=:keywords, cover=:cover WHERE id=:id"
+            );
             $updateBookStmt->execute([
                 "title" => $title,
                 "author" => $author,
                 "price" => $price,
                 "description" => $description,
                 "keywords" => $keywords,
-                "id" => $id
+                "id" => $id,
+                "cover" => $cover ?? ''
             ]);
             $db = null;
             if ($updateBookStmt->rowCount()) {
@@ -77,13 +72,8 @@ if (!empty($_POST)) {
     header('location:' . 'index.php?type=' . $type . '&message=' . $message);
 }
 
-function uploadImage()
+function uploadImage(): string
 {
-
-//    echo  basename($_FILES["cover"]);
-
-//    print_r($request);
-//    die();
     if (!file_exists('uploads')) {
         mkdir('uploads', 0777, true);
     }
@@ -94,5 +84,5 @@ function uploadImage()
     move_uploaded_file($_FILES["cover"]["tmp_name"],$targetFile);
 
     return $targetFile;
-//    die();
+
 }
