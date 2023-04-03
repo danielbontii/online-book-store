@@ -16,9 +16,9 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users
 (
     id       serial PRIMARY KEY,
-    username VARCHAR(50),
+    username VARCHAR(50) UNIQUE,
     password VARCHAR(255),
-    role     VARCHAR(10),
+    role     VARCHAR(10)
 );
 
 DROP TABLE IF EXISTS reviews;
