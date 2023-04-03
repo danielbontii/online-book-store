@@ -3,24 +3,36 @@
 require_once 'functions.php';
 
 if (!empty($_POST)) {
+
+//    print_r($_FILES); die();
     $title = $_POST['title'] ?? '';
     $author = $_POST['author'] ?? '';
-    $price = $_POST['price'] ?? '';
+    $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_INT);
     $keywords = $_POST['keywords'] ?? '';
     $description = $_POST['description'] ?? '';
+    $cover = uploadImage();
+
+//    print_r();
+//    die();
+
+    uploadImage();
 
     $db = connect();
 
     if (empty($_POST['id'])) {
         try {
-            $newBookStmt = $db->prepare("INSERT INTO books(title, author, price, description, keywords) VALUES (:title, :author, :price, :description, :keywords)");
+            $newBookStmt = $db->prepare("INSERT INTO books(title, author, price, description, keywords, cover) VALUES (:title, :author, :price, :description, :keywords, :cover)");
             $newBookStmt->execute([
                 "title" => $title,
                 "author" => $author,
                 "price" => $price,
                 "description" => $description,
-                "keywords" => $keywords
+                "keywords" => $keywords,
+                "cover" => $cover
             ]);
+//            print_r($newBookStmt);
+//            var_dump($db->lastInsertId());
+//            die();
             if ($newBookStmt->rowCount()) {
                 $type = 'success';
                 $message = 'Book added successfully';
@@ -63,4 +75,24 @@ if (!empty($_POST)) {
     //TODO: change location to admin dashboard
 
     header('location:' . 'index.php?type=' . $type . '&message=' . $message);
+}
+
+function uploadImage()
+{
+
+//    echo  basename($_FILES["cover"]);
+
+//    print_r($request);
+//    die();
+    if (!file_exists('uploads')) {
+        mkdir('uploads', 0777, true);
+    }
+    $targetDir = "uploads/";
+    $targetFile = $targetDir . basename($_FILES["cover"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
+    move_uploaded_file($_FILES["cover"]["tmp_name"],$targetFile);
+
+    return $targetFile;
+//    die();
 }

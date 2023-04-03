@@ -17,6 +17,7 @@ if (isset($_GET['id'])) {
     }
 
 }
+
 ?>
 
 <?php require_once '_header.php' ?>
@@ -25,7 +26,7 @@ if (isset($_GET['id'])) {
         <h1 class='col-md-12 text-center border border-dark bg-primary text-white'>Add New Book</h1>
     </div>
     <div class='row container mx-auto'>
-        <form method='post' action='add-edit-book.php'>
+        <form method='post' action='add-edit-book.php' enctype="multipart/form-data">
             <input type='hidden' name='id' value='<?= $member['id'] ?? '' ?>'>
             <div class="row">
                 <div class='form-group my-3 col-6'>
