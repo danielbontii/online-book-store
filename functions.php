@@ -27,3 +27,17 @@ function isUser(): bool
 {
     return isset($_SESSION['userRole']) && ($_SESSION['userRole']) === 'user';
 }
+
+function getBookById($id) {
+
+    try {
+        $db = connect();
+        $bookQuery = $db->prepare("SELECT * FROM books WHERE id = :id");
+        $bookQuery->execute(["id" => $id]);
+        $book = $bookQuery->fetch(PDO::FETCH_ASSOC);
+        $db = null;
+        return $book;
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+}

@@ -29,16 +29,20 @@ echo createHeader();
     <div class="d-flex flex-wrap">
         <?php if (isset($books) && count($books) > 0): ?>
             <?php foreach ($books as $book): ?>
+
                 <div class="card m-2" style="width: 18rem;">
                     <?php if (isLoggedIn() && isAdmin()): ?>
                         <a href="book-form.php?id=<?= $book['id'] ?>">Edit</a>
                     <?php endif; ?>
                     <img src=<?php echo $book['cover']; ?> class="card-img-top" alt="cover" class="fluid">
                     <div class="card-body">
-                        <h5 class="card-title"> <?php echo $book['title']; ?></h5>
+                        <a href="view-book.php?id=<?= $book['id'] ?>"><h5
+                                    class="card-title"> <?php echo $book['title']; ?></h5></a>
                         <p class="card-text"><?php echo $book['description']; ?></p>
                     </div>
                 </div>
+
+                <!--                </a>-->
             <?php endforeach; ?>
         <?php else: ?>
             <p>No books available</p>

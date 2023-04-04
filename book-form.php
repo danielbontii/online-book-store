@@ -5,19 +5,8 @@ require_once '_header.php';
 echo createHeader();
 
 if (isset($_GET['id'])) {
-
     $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
-    try {
-        $db = connect();
-        $bookQuery = $db->prepare("SELECT * FROM books WHERE id = :id");
-        $bookQuery->execute(["id" => $id]);
-        $book = $bookQuery->fetch(PDO::FETCH_ASSOC);
-        $db = null;
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
-
+    $book = getBookById($id);
 }
 
 ?>
