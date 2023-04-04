@@ -1,6 +1,8 @@
 <?php
 
 require_once 'functions.php';
+require_once '_header.php';
+echo createHeader();
 
 if (isset($_GET['id'])) {
 
@@ -74,7 +76,7 @@ if (isset($_GET['id'])) {
                 </div>
             </div>
 
-            <button type='submit' class='btn btn-primary my-3' name='submit'>Submit</button>
+            <button type='submit' class='btn btn-secondary my-3' name='submit'>Submit</button>
         </form>
     </div>
 

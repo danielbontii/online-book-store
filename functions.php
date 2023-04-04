@@ -1,29 +1,8 @@
 <?php
 
-function connect()
+include 'connection.php';
+function getGooks()
 {
-    // Set the hostname
-    $hostname = 'localhost';
-
-    // Set the database name
-    $dbname = 'online_bookstore';
-
-    // Set the username and password with permissions to the database
-    $username = 'root';
-    $password = '';
-
-    // Create the DSN (data source name) by combining the database type, hostname and dbname
-    $dsn = "mysql:host=$hostname;dbname=$dbname";
-
-    try {
-        return new PDO($dsn, $username, $password);
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
-
-}
-
-function getGooks() {
     try {
         $db = connect();
         $booksQuery = $db->query("SELECT * FROM books");
@@ -31,4 +10,20 @@ function getGooks() {
     } catch (Exception $e) {
         echo($e->getMessage());
     }
+}
+
+function isLoggedIn(): bool
+{
+    return isset($_SESSION) && isset($_SESSION['authenticated']) && ($_SESSION['authenticated']);
+}
+
+
+function isAdmin(): bool
+{
+    return isset($_SESSION['userRole']) && ($_SESSION['userRole']) === 'admin';
+}
+
+function isUser(): bool
+{
+    return isset($_SESSION['userRole']) && ($_SESSION['userRole']) === 'user';
 }

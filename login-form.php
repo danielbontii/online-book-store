@@ -1,4 +1,8 @@
-<?php require_once '_header.php'; ?>
+<?php
+include '_header.php';
+echo createHeader();
+
+?>
 
 <section class="vh-100">
     <div class="container h-100">

@@ -1,7 +1,9 @@
 <?php
+include '_header.php';
 session_start();
-require_once '_header.php';
+echo createHeader();
 ?>
+
 
 <div class='container'>
     <div class='row'>
@@ -16,8 +18,6 @@ require_once '_header.php';
 
     <?php
 
-    include "functions.php";
-
     try {
         $books = getGooks();
     } catch (Exception $e) {
@@ -30,7 +30,7 @@ require_once '_header.php';
         <?php if (isset($books) && count($books) > 0): ?>
             <?php foreach ($books as $book): ?>
                 <div class="card m-2" style="width: 18rem;">
-                    <?php if (isset($_SESSION) && $_SESSION['authenticated'] && $_SESSION['userRole'] === 'admin'): ?>
+                    <?php if (isLoggedIn() && isAdmin()): ?>
                         <a href="book-form.php?id=<?= $book['id'] ?>">Edit</a>
                     <?php endif; ?>
                     <img src=<?php echo $book['cover']; ?> class="card-img-top" alt="cover" class="fluid">

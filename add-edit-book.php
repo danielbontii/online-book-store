@@ -15,7 +15,8 @@ if (!empty($_POST)) {
 
     if (empty($_POST['id'])) {
         try {
-            $newBookStmt = $db->prepare("INSERT INTO books(title, author, price, description, keywords, cover) VALUES (:title, :author, :price, :description, :keywords, :cover)");
+            $newBookStmt = $db->prepare("INSERT INTO books(title, author, price, description, keywords, cover) 
+                VALUES (:title, :author, :price, :description, :keywords, :cover)");
             $newBookStmt->execute([
                 "title" => $title,
                 "author" => $author,
@@ -80,8 +81,8 @@ function uploadImage(): string
     $targetDir = "uploads/";
     $targetFile = $targetDir . basename($_FILES["cover"]["name"]);
     $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
-    move_uploaded_file($_FILES["cover"]["tmp_name"],$targetFile);
+    $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+    move_uploaded_file($_FILES["cover"]["tmp_name"], $targetFile);
 
     return $targetFile;
 
