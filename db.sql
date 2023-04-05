@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS books;
-
 CREATE TABLE books
 (
     id          serial PRIMARY KEY,
@@ -12,7 +11,6 @@ CREATE TABLE books
 );
 
 DROP TABLE IF EXISTS users;
-
 CREATE TABLE users
 (
     id       serial PRIMARY KEY,
@@ -22,11 +20,21 @@ CREATE TABLE users
 );
 
 DROP TABLE IF EXISTS reviews;
-
 CREATE TABLE reviews
 (
     id     serial PRIMARY KEY,
-    book_id REFERENCES books (id),
-    user_id REFERENCES users (id),
+    book_id INTEGER REFERENCES books (id),
+    user_id INTEGER REFERENCES users (id),
     review VARCHAR(255)
+);
+
+DROP TABLE IF EXISTS carts;
+CREATE TABLE carts
+(
+    id         serial PRIMARY KEY,
+    book_id INTEGER REFERENCES books (id),
+    user_id INTEGER REFERENCES users (id),
+    quantity   INTEGER,
+    total_cost FLOAT,
+    confirmed  INTEGER DEFAULT 0
 );

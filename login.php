@@ -25,6 +25,7 @@ if (!empty($_POST)) {
     if ($isValidUser) {
         $_SESSION['authenticated'] = true;
         $_SESSION['userRole'] = $user['role'];
+        $_SESSION['userId'] = $user['id'];
         header('location: index.php?type=success&message=login successful');
     }
 

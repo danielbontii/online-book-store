@@ -14,7 +14,7 @@ echo createHeader();
         </div>
     </div>
 
-    <h2 class="display-5">Featured Books</h2>
+    <h2 class="display-5 text-center">Featured Books</h2>
 
     <?php
 
@@ -26,7 +26,7 @@ echo createHeader();
 
     ?>
 
-    <div class="d-flex flex-wrap">
+    <div class="d-flex flex-wrap justify-content-center">
         <?php if (isset($books) && count($books) > 0): ?>
             <?php foreach ($books as $book): ?>
 
@@ -40,9 +40,19 @@ echo createHeader();
                                     class="card-title"> <?php echo $book['title']; ?></h5></a>
                         <p class="card-text"><?php echo $book['description']; ?></p>
                     </div>
+                    <?php if (isLoggedIn() && isUser()): ?>
+                        <form method="post" action="add-to-cart.php?id=<?= $book['id'] ?>">
+                            <input type='hidden' name='id' value='<?= $book['id'] ?? '' ?>'>
+                            <div class="row mb-1 mx-auto">
+                                <div class="col"><input type="number" min="1" name="quantity" class="form-control"
+                                                        value="1"></div>
+                                <div class="col">
+                                    <button type="submit" class="btn btn-secondary">Add to cart</button>
+                                </div>
+                            </div>
+                        </form>
+                    <?php endif; ?>
                 </div>
-
-                <!--                </a>-->
             <?php endforeach; ?>
         <?php else: ?>
             <p>No books available</p>
