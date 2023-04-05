@@ -15,6 +15,7 @@ if (!empty($_POST)) {
         'username' => $username
     ]);
     $user = $userStmt->fetch(PDO::FETCH_ASSOC);
+    $db =  null;
 
     //TODO: Add errors to login page
     $isValidUser = $user && password_verify($password, $user['password']);

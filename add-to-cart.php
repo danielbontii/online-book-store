@@ -15,7 +15,7 @@ if (isset($_POST)) {
     $message = '';
     $typeSuccess = 'success';
     $successMsg = 'Book added to cart';
-    $typeFailure = 'failure';
+    $typeFailure = 'error';
     $failureMsg = 'Book not added to cart';
 
     try {
@@ -42,6 +42,7 @@ if (isset($_POST)) {
                 'bookId' => $bookId,
                 'confirmed' => 0
             ]);
+            $db = null;
             if ($updateCartItemStmt->rowCount()) {
                 $type = $typeSuccess;
                 $message = $successMsg;
@@ -60,6 +61,7 @@ if (isset($_POST)) {
                 "quantity" => $quantity,
                 "totalCost" => $totalCost
             ]);
+            $db = null;
             if ($newCartItemStmt->rowCount()) {
                 $type = $typeSuccess;
                 $message = $successMsg;
@@ -71,7 +73,7 @@ if (isset($_POST)) {
         header('location:' . 'index.php?type=' . $type . '&message=' . $message);
     } catch (Exception $e) {
         $type = 'error';
-        $message = 'Book not added: ' . $e->getMessage();
+        $message = $failureMsg . $e->getMessage();
     }
 }
 

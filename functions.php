@@ -28,7 +28,8 @@ function isUser(): bool
     return isset($_SESSION['userRole']) && ($_SESSION['userRole']) === 'user';
 }
 
-function getBookById($id) {
+function getBookById($id)
+{
 
     try {
         $db = connect();
@@ -37,6 +38,24 @@ function getBookById($id) {
         $book = $bookQuery->fetch(PDO::FETCH_ASSOC);
         $db = null;
         return $book;
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+}
+
+function getCartByUserId($id)
+{
+    try {
+        $db = connect();
+        $cartQuery = $db->prepare("SELECT carts.*, books.price, books.author, books.price, books.title 
+         FROM carts LEFT JOIN books ON carts.book_id = books.id WHERE user_id = :id AND confirmed=:confirmed");
+        $cartQuery->execute([
+            "id" => $id,
+            "confirmed" => 0
+        ]);
+        $cart = $cartQuery->fetchAll();
+        $db = null;
+        return $cart;
     } catch (Exception $e) {
         echo $e->getMessage();
     }

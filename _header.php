@@ -29,7 +29,7 @@
                 </ul>
                 <?php if (isLoggedIn() && isUser()): ?>
                     <div class="nav-item m-1">
-                        <a class="nav-link active" aria-current="page" href="#">Cart</a>
+                        <a class="nav-link active" aria-current="page" href="cart.php">Cart</a>
                     </div>
                 <?php endif; ?>
                 <a href="login-form.php">
