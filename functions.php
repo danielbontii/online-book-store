@@ -60,3 +60,8 @@ function getCartByUserId($id)
         echo $e->getMessage();
     }
 }
+
+function sumCartItemPrices($cartItems): int
+{
+    return array_reduce($cartItems, fn($carry, $cartItem) => $carry + $cartItem['total_cost'], 0);
+}
