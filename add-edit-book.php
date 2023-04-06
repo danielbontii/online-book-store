@@ -6,7 +6,8 @@ if (!empty($_POST)) {
 
     $title = $_POST['title'] ?? '';
     $author = $_POST['author'] ?? '';
-    $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_INT);
+//    $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_INT);
+    $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     $keywords = $_POST['keywords'] ?? '';
     $description = $_POST['description'] ?? '';
     $cover = uploadImage();
