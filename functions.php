@@ -65,3 +65,21 @@ function sumCartItemPrices($cartItems): int
 {
     return array_reduce($cartItems, fn($carry, $cartItem) => $carry + $cartItem['total_cost'], 0);
 }
+
+function confirmCartItemOrders($cartItems)
+{
+    if (!empty($cartItems)) {
+        try {
+            $db = connect();
+
+            foreach ($cartItems as $cartItem) {
+                $confirmBookQuery = $db->prepare("UPDATE carts SET confirmed = 1 WHERE id = :id");
+                $confirmBookQuery->execute(["id" => $cartItem['id']]);
+            }
+            $db = null;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+}
