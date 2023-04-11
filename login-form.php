@@ -8,7 +8,7 @@ echo createHeader();
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-75">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                <div class="card shadow-2-strong" >
                     <div class="card-body p-5 text-center">
 
                         <h3 class="mb-5">Sign in</h3>
@@ -25,7 +25,7 @@ echo createHeader();
                                 <label class="form-label" for="password">Password</label>
                             </div>
 
-                            <button class="btn btn-secondary btn-lg btn-block" type="submit">Login</button>
+                            <button class="btn btn-secondary btn-lg btn-block" type="submit">Sign in</button>
                         </form>
                     </div>
                 </div>

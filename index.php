@@ -4,7 +4,8 @@ session_start();
 echo createHeader();
 
 try {
-    $books = getFeaturedBooks();
+    $featuredBooks = getFeaturedBooks();
+    $books = getBooks();
 } catch (Exception $e) {
     echo($e->getMessage());
 }
@@ -13,54 +14,30 @@ try {
 
 
 <div class='container'>
-    <div class='row'>
-        <div class='jumbotron bg-light m-2 p-2'>
-            <h1 class='display-4'>Welcome to the Online Bookstore!</h1>
-            <p class='lead'>Browse from the latest books in our collection!</p>
-            <hr class='my-4'>
+    <?php if (isLoggedIn() && isUser()): ?>
+        <div class='row'>
+            <div class='jumbotron bg-light m-2 p-2'>
+                <h1 class='display-4'>Welcome to the Online Bookstore!</h1>
+                <p class='lead'>Browse from the latest books in our collection!</p>
+                <hr class='my-4'>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
 
-    <h2 class="display-5 text-center">Featured Books</h2>
-    <div class="d-flex flex-wrap justify-content-center">
-        <?php if (isset($books) && count($books) > 0): ?>
-            <?php foreach ($books as $book): ?>
+    <?php if (isLoggedIn() && isAdmin()): ?>
+        <a href="book-form.php"><button class="btn btn-success mt-5">New Book</button></a>
+    <?php endif; ?>
 
-                <div class="card m-2" style="width: 18rem;">
-                    <?php if (isLoggedIn() && isAdmin()): ?>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="book-form.php?id=<?= $book['id'] ?>">Edit</a>
-                            <form method="post" action="feature-book.php">
-                                <input type="hidden" name='bookId' value='<?= $book['id'] ?? '' ?>'>
-                                <button type="submit" class="btn btn-secondary">
-                                    <?= $book['featured'] ? 'Remove from featured' : 'Add to featured' ?>
-                                </button>
-                            </form>
-                        </div>
-                    <?php endif; ?>
-                    <img src=<?php echo $book['cover']; ?> class="card-img-top" alt="cover" class="fluid">
-                    <div class="card-body">
-                        <a href="view-book.php?id=<?= $book['id'] ?>"><h5
-                                    class="card-title"> <?php echo $book['title']; ?></h5></a>
-                        <p class="card-text"><?php echo $book['description']; ?></p>
-                    </div>
-                    <?php if (isLoggedIn() && isUser()): ?>
-                        <form method="post" action="add-to-cart.php?id=<?= $book['id'] ?>">
-                            <input type='hidden' name='id' value='<?= $book['id'] ?? '' ?>'>
-                            <div class="row mb-1 mx-auto">
-                                <div class="col"><input type="number" min="1" name="quantity" class="form-control"
-                                                        value="1"></div>
-                                <div class="col">
-                                    <button type="submit" class="btn btn-secondary">Add to cart</button>
-                                </div>
-                            </div>
-                        </form>
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>No books available</p>
-        <?php endif; ?>
-    </div>
+    <?php if (isset($featuredBooks) && !empty($featuredBooks) > 0): ?>
+        <h2 class="display-5 text-center">Featured Books</h2>
+        <?php echo renderBooks($featuredBooks) ?>
+    <?php endif; ?>
+
+    <?php if (isset($books) && !empty($books)): ?>
+        <h2 class="display-5 text-center">All Books</h2>
+        <?php echo renderBooks($books) ?>
+    <?php else: ?>
+        <?php echo renderNoContent("No books available at the moment") ?>
+    <?php endif; ?>
 
     <?php require_once '_footer.php' ?>

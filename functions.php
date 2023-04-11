@@ -97,3 +97,61 @@ function getFeaturedBooks()
         echo($e->getMessage());
     }
 }
+
+function renderBooks(array $books): string
+{
+    $booksHtml = '<div class="d-flex flex-wrap justify-content-center"><div class="card m-2" style="width: 18rem;">';
+
+    if (empty($books)) {
+        return "No books available";
+    }
+
+    foreach ($books as $book) {
+
+        if (isLoggedIn() && isAdmin()) {
+
+            $featured = $book["featured"] ? "Remove from featured" : "Add to featured";
+            $booksHtml .=
+                        '<div class="d-flex justify-content-between align-items-center">
+                            <a href="book-form.php?id=' . $book['id'] . '"' . '>Edit</a>
+                            <form method="post" action="feature-book.php">
+                                <input type="hidden" name="bookId" value="' . $book['id'] . '"' . '>
+                                <button type="submit" class="btn btn-secondary">' . $featured . '</button>
+                            </form>
+                        </div>';
+        }
+        $booksHtml .=
+            '<img src="' . $book['cover'] . '" ' . 'class="card-img-top" alt="cover" class="fluid">
+                <div class="card-body">
+                    <a href="view-book.php?id=' . $book['id'] . '"' . '>
+                    <h5 class="card-title"> ' . $book['title'] . '</h5></a>
+                    <p class="card-text">' . $book['description'] . '</p>
+                </div>';
+        if (isLoggedIn() && isUser()) {
+            $booksHtml .=
+                '<form method="post" action="add-to-cart.php?id=' . $book['id'] . '"' . '>
+                    <input type="hidden" name="id" value=' . $book['id'] . '>
+                    <div class="row mb-1 mx-auto">
+                        <div class="col"><input type="number" min="1" name="quantity" class="form-control"
+                                                value="1"></div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-secondary">Add to cart</button>
+                        </div>
+                    </div>
+                </form>';
+        }
+        $booksHtml .= '</div>';
+
+    }
+    $booksHtml .= '</div>';
+    return $booksHtml;
+}
+
+function renderNoContent($title): string
+{
+    return
+        '<div class="d-flex flex-wrap justify-content-center align-items-center h-25">
+            <p>' . $title . '</p>
+        </div>';
+}
+
