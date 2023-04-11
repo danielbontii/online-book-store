@@ -7,7 +7,9 @@ CREATE TABLE books
     price       FLOAT,
     description VARCHAR(255),
     keywords    VARCHAR(255),
-    cover       VARCHAR(255)
+    cover       VARCHAR(255),
+    featured INTEGER DEFAULT 0,
+    category VARCHAR(50)
 );
 
 DROP TABLE IF EXISTS users;

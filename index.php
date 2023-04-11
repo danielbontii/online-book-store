@@ -2,6 +2,13 @@
 include '_header.php';
 session_start();
 echo createHeader();
+
+try {
+    $books = getFeaturedBooks();
+} catch (Exception $e) {
+    echo($e->getMessage());
+}
+
 ?>
 
 
@@ -15,24 +22,21 @@ echo createHeader();
     </div>
 
     <h2 class="display-5 text-center">Featured Books</h2>
-
-    <?php
-
-    try {
-        $books = getGooks();
-    } catch (Exception $e) {
-        echo($e->getMessage());
-    }
-
-    ?>
-
     <div class="d-flex flex-wrap justify-content-center">
         <?php if (isset($books) && count($books) > 0): ?>
             <?php foreach ($books as $book): ?>
 
                 <div class="card m-2" style="width: 18rem;">
                     <?php if (isLoggedIn() && isAdmin()): ?>
-                        <a href="book-form.php?id=<?= $book['id'] ?>">Edit</a>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="book-form.php?id=<?= $book['id'] ?>">Edit</a>
+                            <form method="post" action="feature-book.php">
+                                <input type="hidden" name='bookId' value='<?= $book['id'] ?? '' ?>'>
+                                <button type="submit" class="btn btn-secondary">
+                                    <?= $book['featured'] ? 'Remove from featured' : 'Add to featured' ?>
+                                </button>
+                            </form>
+                        </div>
                     <?php endif; ?>
                     <img src=<?php echo $book['cover']; ?> class="card-img-top" alt="cover" class="fluid">
                     <div class="card-body">

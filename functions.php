@@ -1,7 +1,7 @@
 <?php
 
 include 'connection.php';
-function getGooks()
+function getBooks()
 {
     try {
         $db = connect();
@@ -82,4 +82,18 @@ function confirmCartItemOrders($cartItems)
         }
     }
 
+}
+
+function getFeaturedBooks()
+{
+    try {
+        $db = connect();
+        $booksQuery = $db->prepare("SELECT * FROM books WHERE featured=:featured");
+        $booksQuery->execute([
+            "featured" => 1
+        ]);
+        return $booksQuery->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        echo($e->getMessage());
+    }
 }

@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
                 <div class='form-group my-3 col-4'>
                     <label for='price'>Price</label>
                     <input type='number' name='price' class='form-control' id='price'
-                           placeholder='Enter price' required autofocus
+                           placeholder='Enter price' required autofocus step="0.01"
                            value='<?= isset($book['price']) ? htmlentities($book['price']) : '' ?>'>
                 </div>
                 <div class='form-group my-3 col-8'>
