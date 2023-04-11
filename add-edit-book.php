@@ -6,7 +6,6 @@ if (!empty($_POST)) {
 
     $title = $_POST['title'] ?? '';
     $author = $_POST['author'] ?? '';
-//    $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_INT);
     $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     $keywords = $_POST['keywords'] ?? '';
     $description = $_POST['description'] ?? '';
@@ -69,8 +68,6 @@ if (!empty($_POST)) {
 
     $db = null;
 
-    //TODO: change location to admin dashboard
-
     header('location:' . 'index.php?type=' . $type . '&message=' . $message);
 }
 
@@ -81,10 +78,7 @@ function uploadImage(): string
     }
     $targetDir = "uploads/";
     $targetFile = $targetDir . basename($_FILES["cover"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
     move_uploaded_file($_FILES["cover"]["tmp_name"], $targetFile);
-
     return $targetFile;
 
 }

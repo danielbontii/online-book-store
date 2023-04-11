@@ -15,7 +15,7 @@ echo createHeader();
                         <form method="post" action="login.php">
 
                             <div class="form-outline mb-4">
-                                <input type="username" id="email" class="form-control form-control-lg" name="username"/>
+                                <input type="email" id="email" class="form-control form-control-lg" name="username"/>
                                 <label class="form-label" for="email">Username</label>
                             </div>
 

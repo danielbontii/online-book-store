@@ -32,7 +32,7 @@ if (!empty($_POST)) {
             $message = !$featuredBook ? 'Added featured book successfully' : 'Removed featured book successfully';
         } else {
             $type = 'error';
-            $message = !$featuredBook ? 'Failed to add featured book' : 'Failed to removed featured book';;
+            $message = !$featuredBook ? 'Failed to add featured book' : 'Failed to removed featured book';
         }
     } catch (Exception $e) {
         $type = 'error';

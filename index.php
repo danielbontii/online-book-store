@@ -12,7 +12,6 @@ try {
 
 ?>
 
-
 <div class='container'>
     <?php if (isLoggedIn() && isUser()): ?>
         <div class='row'>
