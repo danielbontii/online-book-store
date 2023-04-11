@@ -24,9 +24,29 @@ try {
         </div>
     <?php endif; ?>
 
-    <?php if (isLoggedIn() && isAdmin()): ?>
-        <a href="book-form.php"><button class="btn btn-success mt-5">New Book</button></a>
-    <?php endif; ?>
+    <div class="row  mt-5">
+        <?php if (isLoggedIn() && isAdmin()): ?>
+            <div class="col-4">
+                <a href="book-form.php">
+                    <button class="btn btn-success">New Book</button>
+                </a>
+            </div>
+        <?php endif; ?>
+        <div class="col text-center">
+            <form method="post" action="search.php">
+                <label for="searchField">Search by</label>
+                <select class="form-control w-25  d-inline" id="searchField" name="searchField">
+                    <option value="title">Title</option>
+                    <option value="author">Author</option>
+                    <option value="keywords">Keyword</option>
+                </select>
+                <input type="text" class="form-control d-inline w-50" required name="searchValue">
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </form>
+        </div>
+
+    </div>
+
 
     <?php if (isset($featuredBooks) && !empty($featuredBooks) > 0): ?>
         <h2 class="display-5 text-center">Featured Books</h2>

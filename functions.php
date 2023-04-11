@@ -17,7 +17,6 @@ function isLoggedIn(): bool
     return isset($_SESSION) && isset($_SESSION['authenticated']) && ($_SESSION['authenticated']);
 }
 
-
 function isAdmin(): bool
 {
     return isset($_SESSION['userRole']) && ($_SESSION['userRole']) === 'admin';
@@ -100,18 +99,20 @@ function getFeaturedBooks()
 
 function renderBooks(array $books): string
 {
-    $booksHtml = '<div class="d-flex flex-wrap justify-content-center"><div class="card m-2" style="width: 18rem;">';
+    $booksHtml = '<div class="d-flex flex-wrap justify-content-center">';
 
     if (empty($books)) {
         return "No books available";
     }
 
     foreach ($books as $book) {
+        $booksHtml .= '<div class="card m-2" style="width: 18rem;">';
 
         if (isLoggedIn() && isAdmin()) {
 
             $featured = $book["featured"] ? "Remove from featured" : "Add to featured";
             $booksHtml .=
+
                         '<div class="d-flex justify-content-between align-items-center">
                             <a href="book-form.php?id=' . $book['id'] . '"' . '>Edit</a>
                             <form method="post" action="feature-book.php">
