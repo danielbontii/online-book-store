@@ -9,21 +9,23 @@ if (!empty($_POST)) {
     $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     $keywords = $_POST['keywords'] ?? '';
     $description = $_POST['description'] ?? '';
+    $category = $_POST['category'] ?? '';
     $cover = uploadImage();
 
     $db = connect();
 
     if (empty($_POST['id'])) {
         try {
-            $newBookStmt = $db->prepare("INSERT INTO books(title, author, price, description, keywords, cover) 
-                VALUES (:title, :author, :price, :description, :keywords, :cover)");
+            $newBookStmt = $db->prepare("INSERT INTO books(title, author, price, description, keywords, cover, category) 
+                VALUES (:title, :author, :price, :description, :keywords, :cover, :category)");
             $newBookStmt->execute([
                 "title" => $title,
                 "author" => $author,
                 "price" => $price,
                 "description" => $description,
                 "keywords" => $keywords,
-                "cover" => $cover
+                "cover" => $cover,
+                "category" => $category
             ]);
             if ($newBookStmt->rowCount()) {
                 $type = 'success';
@@ -41,7 +43,7 @@ if (!empty($_POST)) {
         try {
             $updateBookStmt = $db->prepare(
                 "UPDATE books SET title=:title, author=:author, price=:price, description=:description,
-                 keywords=:keywords, cover=:cover WHERE id=:id"
+                 keywords=:keywords, cover=:cover, category=:category WHERE id=:id"
             );
             $updateBookStmt->execute([
                 "title" => $title,
@@ -50,7 +52,8 @@ if (!empty($_POST)) {
                 "description" => $description,
                 "keywords" => $keywords,
                 "id" => $id,
-                "cover" => $cover ?? ''
+                "cover" => $cover ?? '',
+                "category" => $category
             ]);
             $db = null;
             if ($updateBookStmt->rowCount()) {

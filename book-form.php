@@ -20,17 +20,23 @@ if (isset($_GET['id'])) {
         <form method='post' action='add-edit-book.php' enctype="multipart/form-data">
             <input type='hidden' name='id' value='<?= $book['id'] ?? '' ?>'>
             <div class="row">
-                <div class='form-group my-3 col-6'>
+                <div class='form-group my-3 col'>
                     <label for='title'>Title</label>
                     <input type='text' name='title' class='form-control' id='title'
                            placeholder='Enter title' required autofocus
                            value='<?= isset($book['title']) ? htmlentities($book['title']) : '' ?>'>
                 </div>
-                <div class='form-group my-3 col-6'>
+                <div class='form-group my-3 col'>
                     <label for='author'>Author</label>
-                    <input type='text' name='author' class='form-control' id='author' placeholder='Enter last name'
+                    <input type='text' name='author' class='form-control' id='author' placeholder="Enter authors' name"
                            required
                            value='<?= isset($book['author']) ? htmlentities($book['author']) : '' ?>'>
+                </div>
+                <div class='form-group my-3 col'>
+                    <label for='category'>Category</label>
+                    <input type='text' name='category' class='form-control' id='category' placeholder='Enter category'
+                           required
+                           value='<?= isset($book['category']) ? htmlentities($book['category']) : '' ?>'>
                 </div>
             </div>
             <div class="row">
