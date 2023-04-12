@@ -31,7 +31,6 @@ function isUser(): bool
 
 function getBookById($id)
 {
-
     try {
         $db = connect();
         $bookQuery = $db->prepare("SELECT * FROM books WHERE id = :id");
@@ -115,7 +114,7 @@ function renderBooks(array $books): string
             $featured = $book["featured"] ? "Remove from featured" : "Add to featured";
             $booksHtml .=
 
-                        '<div class="d-flex justify-content-between align-items-center">
+                '<div class="d-flex justify-content-between align-items-center">
                             <a href="book-form.php?id=' . $book['id'] . '"' . '>Edit</a>
                             <form method="post" action="feature-book.php">
                                 <input type="hidden" name="bookId" value="' . $book['id'] . '"' . '>
@@ -169,5 +168,39 @@ function getUniqueCategories()
     } catch (Exception $e) {
         echo($e->getMessage());
     }
+}
+
+function getBookCommentsWithReplies($bookId)
+{
+    try {
+        $db = connect();
+
+        $commentsQuery = $db->prepare("SELECT comments.*, users.username FROM comments LEFT JOIN users 
+            ON users.id = comments.user_id WHERE book_id=:bookId");
+        $commentsQuery->execute([
+            'bookId' => $bookId
+        ]);
+        $comments = $commentsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($comments)) {
+            foreach ($comments as $comment) {
+                $repliesQuery = $db->prepare("SELECT replies.*, users.username FROM replies LEFT JOIN users
+                    ON users.id = replies.user_id WHERE comment_id=:commentId");
+                $repliesQuery->execute([
+                    'commentId' => $comment['id']
+                ]);
+                $replies = $repliesQuery->fetchAll(PDO::FETCH_ASSOC);
+                if (!empty($replies)) {
+                    $comment['replies'] = $replies;
+                }
+            }
+        }
+
+        $db = null;
+        return $comments;
+    } catch (Exception $e) {
+        echo($e->getMessage());
+    }
+
 }
 
