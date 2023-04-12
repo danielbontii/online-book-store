@@ -6,7 +6,9 @@ function getBooks()
     try {
         $db = connect();
         $booksQuery = $db->query("SELECT * FROM books");
-        return $booksQuery->fetchAll(PDO::FETCH_ASSOC);
+        $books = $booksQuery->fetchAll(PDO::FETCH_ASSOC);
+        $db = null;
+        return $books;
     } catch (Exception $e) {
         echo($e->getMessage());
     }
@@ -154,5 +156,18 @@ function renderNoContent($title): string
         '<div class="d-flex flex-wrap justify-content-center align-items-center h-25">
             <p>' . $title . '</p>
         </div>';
+}
+
+function getUniqueCategories()
+{
+    try {
+        $db = connect();
+        $categoriesQuery = $db->query("SELECT DISTINCT category AS name FROM books WHERE category IS NOT NULL");
+        $categories = $categoriesQuery->fetchAll(PDO::FETCH_ASSOC);
+        $db = null;
+        return $categories;
+    } catch (Exception $e) {
+        echo($e->getMessage());
+    }
 }
 
