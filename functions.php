@@ -183,19 +183,19 @@ function getBookCommentsWithReplies($bookId)
         $comments = $commentsQuery->fetchAll(PDO::FETCH_ASSOC);
 
         if (!empty($comments)) {
-            foreach ($comments as $comment) {
+            for ($i = 0; $i < count($comments); $i++) {
                 $repliesQuery = $db->prepare("SELECT replies.*, users.username FROM replies LEFT JOIN users
                     ON users.id = replies.user_id WHERE comment_id=:commentId");
                 $repliesQuery->execute([
-                    'commentId' => $comment['id']
+                    'commentId' => $comments[$i]['id']
                 ]);
                 $replies = $repliesQuery->fetchAll(PDO::FETCH_ASSOC);
+
                 if (!empty($replies)) {
-                    $comment['replies'] = $replies;
+                    $comments[$i]['replies'] = $replies;
                 }
             }
         }
-
         $db = null;
         return $comments;
     } catch (Exception $e) {

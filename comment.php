@@ -6,6 +6,7 @@ if (!empty($_POST)) {
 
     $userId = $_SESSION['userId'];
     $bookId = filter_input(INPUT_POST, 'bookId', FILTER_SANITIZE_NUMBER_INT);
+
     $db = connect();
 
     if (isset($_POST['comment'])) {

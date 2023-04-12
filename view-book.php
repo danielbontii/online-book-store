@@ -9,7 +9,6 @@ if (isset($_GET['id'])) {
     try {
         $book = getBookById($id);
         $comments = getBookCommentsWithReplies($id);
-        var_dump($comments);
     } catch (Exception $e) {
         echo $e->getMessage();
     }
@@ -51,6 +50,7 @@ if (isset($_GET['id'])) {
                     <?php endif; ?>
                     <?php if (!empty($comments)): ?>
                         <hr/>
+                        <h2>Comments</h2>
                         <?php foreach ($comments as $comment): ?>
                             <p>
                                 <?= $comment['message'] ?? 'comment unavailable' ?>
@@ -58,6 +58,7 @@ if (isset($_GET['id'])) {
                             </p>
                             <div class="ms-5">
                                 <form method="post" action="comment.php">
+                                    <input type="hidden" name="bookId" value="<?= $book['id'] ?? '' ?>">
                                     <input type="hidden" name="commentId" value="<?= $comment['id'] ?? '' ?>">
                                     <div class="form-group">
                                         <label for="reply">Add Reply</label>
@@ -71,27 +72,16 @@ if (isset($_GET['id'])) {
                             </div>
 
 
-                            <?php if (!empty($comments['replies'])): ?>
-                                <hr/>
-                                <?php foreach ($comments['replies'] as $reply): ?>
-                                    <p>
-                                        <?= $reply['message'] ?? 'comment unavailable' ?>
-                                        [<?= $reply['username'] ?? 'Username unavailable' ?>]
-                                    </p>
+                            <?php if (!empty($comment['replies'])): ?>
+                                    <h3 class="ms-5">Replies</h3>
+                                <?php foreach ($comment['replies'] as $reply): ?>
                                     <div class="ms-5">
-                                        <form method="post" action="comment.php">
-                                            <input type="hidden" name="commentId" value="<?= $comment['id'] ?? '' ?>">
-                                            <input type="hidden" name="bookId" value="<?= $book['id'] ?? '' ?>">
-                                            <div class="form-group">
-                                                <label for="reply">Add Reply</label>
-                                                <input type="text" class="form-control d-inline" id="reply" name="reply"
-                                                       required>
-                                                <button type="submit"
-                                                        class="form-control btn btn-success d-inline w-25">
-                                                    Post
-                                                </button>
-                                            </div>
-                                        </form>
+<!--                                        <hr/>-->
+                                        <p>
+                                            <?= $reply['message'] ?? 'comment unavailable' ?>
+                                            [<?= $reply['username'] ?? 'Username unavailable' ?>]
+                                        </p>
+
                                     </div>
                                 <?php endforeach; ?>
 
