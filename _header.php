@@ -1,6 +1,10 @@
 <?php require_once 'functions.php';
 function createHeader(): string
 {
+    $buttonText = isLoggedIn() ? "Logout" : "Login";
+    $buttonHref = isLoggedIn() ? "logout.php" : "login-form.php";
+    $buttonOutline = isLoggedIn() ? 'btn-outline-danger' : 'btn-outline-success';
+
     $header = '<html lang="en">
      <head>
         <title>OnlineBookStore</title>
@@ -33,8 +37,8 @@ function createHeader(): string
                      </div>';
             }
             $header .=
-                    '<a href="login-form.php">
-                            <button class="btn btn-outline-success">Login</button>
+                    '<a href="' . $buttonHref . '">
+                            <button class="btn ' . $buttonOutline . '">' . $buttonText . '</button>
                     </a>
                 </div>
             </div>

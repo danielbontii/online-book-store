@@ -48,6 +48,9 @@ if (isset($_GET['id'])) {
                             </div>
                         </form>
                     <?php endif; ?>
+                    <?php if (!isLoggedIn()): ?>
+                        <p class="bg-success text-white d-inline p-1">Login to add comments</p>
+                    <?php endif; ?>
                     <?php if (!empty($comments)): ?>
                         <hr/>
                         <h2>Comments</h2>
@@ -56,27 +59,28 @@ if (isset($_GET['id'])) {
                                 <?= $comment['message'] ?? 'comment unavailable' ?>
                                 [<?= $comment['username'] ?? 'Username unavailable' ?>]
                             </p>
-                            <div class="ms-5">
-                                <form method="post" action="comment.php">
-                                    <input type="hidden" name="bookId" value="<?= $book['id'] ?? '' ?>">
-                                    <input type="hidden" name="commentId" value="<?= $comment['id'] ?? '' ?>">
-                                    <div class="form-group">
-                                        <label for="reply">Add Reply</label>
-                                        <input type="text" class="form-control d-inline" id="reply" name="reply"
-                                               required>
-                                        <button type="submit" class="form-control btn btn-success d-inline w-25">
-                                            Post
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+                            <?php if (isLoggedIn()): ?>
+                                <div class="ms-5">
+                                    <form method="post" action="comment.php">
+                                        <input type="hidden" name="bookId" value="<?= $book['id'] ?? '' ?>">
+                                        <input type="hidden" name="commentId" value="<?= $comment['id'] ?? '' ?>">
+                                        <div class="form-group">
+                                            <label for="reply">Add Reply</label>
+                                            <input type="text" class="form-control d-inline" id="reply" name="reply"
+                                                   required>
+                                            <button type="submit" class="form-control btn btn-success d-inline w-25">
+                                                Post
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            <?php endif; ?>
 
 
                             <?php if (!empty($comment['replies'])): ?>
-                                    <h3 class="ms-5">Replies</h3>
+                                <h3 class="ms-5">Replies</h3>
                                 <?php foreach ($comment['replies'] as $reply): ?>
                                     <div class="ms-5">
-<!--                                        <hr/>-->
                                         <p>
                                             <?= $reply['message'] ?? 'comment unavailable' ?>
                                             [<?= $reply['username'] ?? 'Username unavailable' ?>]
