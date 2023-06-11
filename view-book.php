@@ -28,7 +28,7 @@ if (isset($_GET['id'])) {
                     <p><?= $book['title']; ?></p>
 
                     <p class="mb-0 fw-bolder">Price</p>
-                    <p class="h3">GHS <?= $book['price']; ?></p>
+                    <p class="h3">GHC <?= $book['price']; ?></p>
 
                     <p class="mb-0 fw-bolder">Description</p>
                     <p><?= $book['description']; ?></p>

@@ -128,6 +128,7 @@ function renderBooks(array $books): string
                     <a href="view-book.php?id=' . $book['id'] . '"' . '>
                     <h5 class="card-title"> ' . $book['title'] . '</h5></a>
                     <p class="card-text">' . $book['description'] . '</p>
+                    <p class="card-text">GHC ' . $book['price'] . '</p>
                 </div>';
         if (isLoggedIn() && isUser()) {
             $booksHtml .=
